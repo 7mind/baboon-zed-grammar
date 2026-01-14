@@ -1,0 +1,24 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "baboon",
+      "scope": "source.baboon",
+      "file-types": ["baboon", "bmo"],
+      "injection-regex": "^baboon$",
+      "highlights": "queries/highlights.scm"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "SeptimalMind"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/7mind/baboon-zed"
+    }
+  }
+}

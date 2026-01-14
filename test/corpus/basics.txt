@@ -1,0 +1,191 @@
+================================================================================
+Simple model
+================================================================================
+
+model test.example
+version "1.0.0"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)
+      (identifier)))
+  (version_decl
+    (string_literal)))
+
+================================================================================
+Enum definition
+================================================================================
+
+model test
+version "1.0.0"
+
+enum Status {
+  Pending
+  Active = 1
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (enum_def
+    name: (identifier)
+    (enum_member
+      name: (identifier))
+    (enum_member
+      name: (identifier)
+      (integer
+        (decimal_integer)))))
+
+================================================================================
+Data definition with derivations
+================================================================================
+
+model test
+version "1.0.0"
+
+root data User: derived[json] {
+  id: uid
+  name: str
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (derivations
+      (derived
+        (identifier)))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
+
+================================================================================
+ADT definition
+================================================================================
+
+model test
+version "1.0.0"
+
+adt Result {
+  data Success { value: str }
+  data Failure { code: i32 }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (adt_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type))))
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type))))))
+
+================================================================================
+Generic types
+================================================================================
+
+model test
+version "1.0.0"
+
+data Container {
+  items: lst[str]
+  cache: map[str, i32]
+  maybe: opt[uid]
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (generic_type
+          name: (builtin_type)
+          (type_ref
+            (builtin_type)))))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (generic_type
+          name: (builtin_type)
+          (type_ref
+            (builtin_type))
+          (type_ref
+            (builtin_type)))))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (generic_type
+          name: (builtin_type)
+          (type_ref
+            (builtin_type)))))))
+
+================================================================================
+Namespace
+================================================================================
+
+model test
+version "1.0.0"
+
+ns orders {
+  data Order {
+    id: uid
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (namespace_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type))))))
