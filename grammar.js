@@ -13,6 +13,7 @@ module.exports = grammar({
       seq(
         $.model_decl,
         $.version_decl,
+        repeat($.pragma_decl),
         optional($.import_decl),
         repeat(choice($.include_decl, $._definition))
       ),
@@ -21,6 +22,8 @@ module.exports = grammar({
     model_decl: ($) => seq("model", $.scoped_identifier),
 
     version_decl: ($) => seq("version", $.string_literal),
+
+    pragma_decl: ($) => seq("pragma", $.scoped_identifier, "=", $.string_literal),
 
     include_decl: ($) => seq("include", $.string_literal),
 
