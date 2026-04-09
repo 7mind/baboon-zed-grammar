@@ -189,3 +189,93 @@ ns orders {
         name: (identifier)
         type: (type_ref
           (builtin_type))))))
+
+================================================================================
+Type alias - scalar
+================================================================================
+
+model test
+version "1.0.0"
+
+type BinaryData = bytes
+type MyString = str
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (type_alias_def
+    name: (identifier)
+    target: (type_ref
+      (builtin_type)))
+  (type_alias_def
+    name: (identifier)
+    target: (type_ref
+      (builtin_type))))
+
+================================================================================
+Type alias - generic
+================================================================================
+
+model test
+version "1.0.0"
+
+type StringList = lst[str]
+type IntMap = map[str, i32]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (type_alias_def
+    name: (identifier)
+    target: (type_ref
+      (generic_type
+        name: (builtin_type)
+        (type_ref
+          (builtin_type)))))
+  (type_alias_def
+    name: (identifier)
+    target: (type_ref
+      (generic_type
+        name: (builtin_type)
+        (type_ref
+          (builtin_type))
+        (type_ref
+          (builtin_type))))))
+
+================================================================================
+Type alias - user type
+================================================================================
+
+model test
+version "1.0.0"
+
+enum Status { Active }
+type StatusAlias = Status
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (enum_def
+    name: (identifier)
+    (enum_member
+      name: (identifier)))
+  (type_alias_def
+    name: (identifier)
+    target: (type_ref
+      (scoped_identifier
+        (identifier)))))

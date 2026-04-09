@@ -1,0 +1,449 @@
+================================================================================
+Foreign with string values
+================================================================================
+
+model test
+version "1.0.0"
+
+foreign Money {
+  cs = "System.Decimal" with { "format" = "G29" }
+  scala = "scala.math.BigDecimal"
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (foreign_def
+    name: (identifier)
+    (foreign_mapping
+      target: (identifier)
+      (string_literal)
+      (foreign_attrs
+        (foreign_attr
+          (string_literal)
+          (string_literal))))
+    (foreign_mapping
+      target: (identifier)
+      (string_literal))))
+
+================================================================================
+Foreign with type ref values
+================================================================================
+
+model test
+version "1.0.0"
+
+foreign AliasedScalar {
+  scala = i64
+  rust = i32
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (foreign_def
+    name: (identifier)
+    (foreign_mapping
+      target: (identifier)
+      (type_ref
+        (builtin_type)))
+    (foreign_mapping
+      target: (identifier)
+      (type_ref
+        (builtin_type)))))
+
+================================================================================
+Foreign with generic type ref
+================================================================================
+
+model test
+version "1.0.0"
+
+foreign AliasedCollection {
+  scala = lst[str]
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (foreign_def
+    name: (identifier)
+    (foreign_mapping
+      target: (identifier)
+      (type_ref
+        (generic_type
+          name: (builtin_type)
+          (type_ref
+            (builtin_type)))))))
+
+================================================================================
+Field rename with was
+================================================================================
+
+model test
+version "1.0.0"
+
+data Renamed {
+  newName: str was oldName
+  unchanged: i32
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type))
+      (field_rename
+        previous: (identifier)))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
+
+================================================================================
+Enum member rename
+================================================================================
+
+model test
+version "1.0.0"
+
+enum Status {
+  NewValue : was[OldValue]
+  KeepValue
+  Numbered = 5 : was[OldNumbered]
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (enum_def
+    name: (identifier)
+    (enum_member
+      name: (identifier)
+      (enum_member_rename
+        previous: (identifier)))
+    (enum_member
+      name: (identifier))
+    (enum_member
+      name: (identifier)
+      (integer
+        (decimal_integer))
+      (enum_member_rename
+        previous: (identifier)))))
+
+================================================================================
+Root type alias
+================================================================================
+
+model test
+version "1.0.0"
+
+root type Retained = str
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (type_alias_def
+    name: (identifier)
+    target: (type_ref
+      (builtin_type))))
+
+================================================================================
+Service with methods
+================================================================================
+
+model test
+version "1.0.0"
+
+root service PetStore {
+  def addPet (
+    data in {
+      name: str
+    }
+    data out {
+      id: i64
+    }
+  )
+  def deletePet (
+    in = DeleteRequest
+    out = DeleteResponse
+    err = DeleteError
+  )
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (service_def
+    name: (identifier)
+    (method_def
+      name: (identifier)
+      (method_inline_def
+        (field_def
+          name: (identifier)
+          type: (type_ref
+            (builtin_type))))
+      (method_inline_def
+        (field_def
+          name: (identifier)
+          type: (type_ref
+            (builtin_type)))))
+    (method_def
+      name: (identifier)
+      (method_type_ref
+        (type_ref
+          (scoped_identifier
+            (identifier))))
+      (method_type_ref
+        (type_ref
+          (scoped_identifier
+            (identifier))))
+      (method_type_ref
+        (type_ref
+          (scoped_identifier
+            (identifier)))))))
+
+================================================================================
+Contract and structural inheritance
+================================================================================
+
+model test
+version "1.0.0"
+
+contract Identified {
+  id: uid
+}
+
+data Base {
+  name: str
+  age: i32
+}
+
+data Extended {
+  + Base
+  - age: i32
+  extra: str
+  is Identified
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (contract_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type))))
+  (data_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type))))
+  (data_def
+    name: (identifier)
+    (parent_def
+      (type_ref
+        (scoped_identifier
+          (identifier))))
+    (unparent_def
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type))))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))
+    (contract_ref
+      (type_ref
+        (scoped_identifier
+          (identifier))))))
+
+================================================================================
+Import with without
+================================================================================
+
+model test
+version "1.0.0"
+
+import "other.baboon" {*} without { Excluded }
+
+data Foo {
+  x: i32
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (import_decl
+    (string_literal)
+    (identifier))
+  (data_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
+
+================================================================================
+Pragma and include
+================================================================================
+
+model test
+version "1.0.0"
+
+pragma scala.service.result.type = "scala.util.Either"
+
+include "types.baboon"
+
+data Foo {
+  x: i32
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (pragma_decl
+    (scoped_identifier
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier))
+    (string_literal))
+  (include_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
+
+================================================================================
+Bytes type
+================================================================================
+
+model test
+version "1.0.0"
+
+data BinaryHolder {
+  raw: bytes
+  optBytes: opt[bytes]
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (generic_type
+          name: (builtin_type)
+          (type_ref
+            (builtin_type)))))))
+
+================================================================================
+Data with derivations and was
+================================================================================
+
+model test
+version "1.0.0"
+
+root data MyType : derived[json], derived[ueba], was[OldType] {
+  field1: str
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (derivations
+      (derived
+        (identifier))
+      (derived
+        (identifier))
+      (was
+        (type_ref
+          (scoped_identifier
+            (identifier)))))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))

@@ -46,7 +46,8 @@ module.exports = grammar({
         $.contract_def,
         $.foreign_def,
         $.service_def,
-        $.namespace_def
+        $.namespace_def,
+        $.type_alias_def
       ),
 
     // Data/struct definition
@@ -91,7 +92,14 @@ module.exports = grammar({
       ),
 
     enum_member: ($) =>
-      seq(field("name", $.identifier), optional(seq("=", $.integer))),
+      seq(
+        field("name", $.identifier),
+        optional(seq("=", $.integer)),
+        optional($.enum_member_rename)
+      ),
+
+    enum_member_rename: ($) =>
+      seq(":", "was", "[", field("previous", $.identifier), "]"),
 
     // Contract definition
     contract_def: ($) =>
@@ -118,8 +126,10 @@ module.exports = grammar({
       seq(
         field("target", $.identifier),
         "=",
-        $.string_literal,
-        optional($.foreign_attrs)
+        choice(
+          seq($.string_literal, optional($.foreign_attrs)),
+          $.type_ref
+        )
       ),
 
     foreign_attrs: ($) =>
@@ -167,6 +177,16 @@ module.exports = grammar({
         "}"
       ),
 
+    // Type alias definition
+    type_alias_def: ($) =>
+      seq(
+        optional("root"),
+        "type",
+        field("name", $.identifier),
+        "=",
+        field("target", $.type_ref)
+      ),
+
     // DTO members
     _dto_member: ($) =>
       choice(
@@ -178,7 +198,14 @@ module.exports = grammar({
       ),
 
     field_def: ($) =>
-      seq(field("name", $.identifier), ":", field("type", $.type_ref)),
+      seq(
+        field("name", $.identifier),
+        ":",
+        field("type", $.type_ref),
+        optional($.field_rename)
+      ),
+
+    field_rename: ($) => seq("was", field("previous", $.identifier)),
 
     parent_def: ($) => seq("+", $.type_ref),
 

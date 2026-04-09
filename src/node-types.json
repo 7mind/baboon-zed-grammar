@@ -248,14 +248,34 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "enum_member_rename",
+          "named": true
+        },
         {
           "type": "integer",
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "enum_member_rename",
+    "named": true,
+    "fields": {
+      "previous": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -278,6 +298,32 @@
         "types": [
           {
             "type": "type_ref",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "field_rename",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "field_rename",
+    "named": true,
+    "fields": {
+      "previous": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -369,6 +415,10 @@
         },
         {
           "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "type_ref",
           "named": true
         }
       ]
@@ -651,6 +701,10 @@
         {
           "type": "service_def",
           "named": true
+        },
+        {
+          "type": "type_alias_def",
+          "named": true
         }
       ]
     }
@@ -665,6 +719,25 @@
       "types": [
         {
           "type": "type_ref",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pragma_decl",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "scoped_identifier",
+          "named": true
+        },
+        {
+          "type": "string_literal",
           "named": true
         }
       ]
@@ -757,7 +830,15 @@
           "named": true
         },
         {
+          "type": "pragma_decl",
+          "named": true
+        },
+        {
           "type": "service_def",
+          "named": true
+        },
+        {
+          "type": "type_alias_def",
           "named": true
         },
         {
@@ -780,6 +861,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "type_alias_def",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "target": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_ref",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -1045,6 +1152,10 @@
     "named": false
   },
   {
+    "type": "pragma",
+    "named": false
+  },
+  {
     "type": "root",
     "named": false
   },
@@ -1070,6 +1181,10 @@
   },
   {
     "type": "tsu",
+    "named": false
+  },
+  {
+    "type": "type",
     "named": false
   },
   {
