@@ -550,12 +550,42 @@
     "type": "method_def",
     "named": true,
     "fields": {
+      "err": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_ref",
+            "named": true
+          }
+        ]
+      },
+      "in": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_ref",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
         "types": [
           {
             "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "out": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_ref",
             "named": true
           }
         ]
@@ -988,6 +1018,10 @@
         }
       ]
     }
+  },
+  {
+    "type": "!!",
+    "named": false
   },
   {
     "type": "\"",

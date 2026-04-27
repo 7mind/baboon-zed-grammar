@@ -449,6 +449,68 @@ root data MyType : derived[json], derived[ueba], was[OldType] {
         (builtin_type)))))
 
 ================================================================================
+service methods - shorthand and verbose syntax
+================================================================================
+
+model my.svc
+version "1.0.0"
+
+root service I {
+  def shortNoErr(In): Out
+  def shortWithErr(In): Out !! Err
+  def verbose (
+    in = In
+    out = Out
+    err = Err
+  )
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (service_def
+    name: (identifier)
+    (method_def
+      name: (identifier)
+      in: (type_ref
+        (scoped_identifier
+          (identifier)))
+      out: (type_ref
+        (scoped_identifier
+          (identifier))))
+    (method_def
+      name: (identifier)
+      in: (type_ref
+        (scoped_identifier
+          (identifier)))
+      out: (type_ref
+        (scoped_identifier
+          (identifier)))
+      err: (type_ref
+        (scoped_identifier
+          (identifier))))
+    (method_def
+      name: (identifier)
+      (method_type_ref
+        (type_ref
+          (scoped_identifier
+            (identifier))))
+      (method_type_ref
+        (type_ref
+          (scoped_identifier
+            (identifier))))
+      (method_type_ref
+        (type_ref
+          (scoped_identifier
+            (identifier)))))))
+
+================================================================================
 any type - bare and qualified forms
 ================================================================================
 

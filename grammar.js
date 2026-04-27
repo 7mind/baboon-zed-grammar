@@ -149,8 +149,22 @@ module.exports = grammar({
         "}"
       ),
 
+    // Two surface syntaxes for service methods:
+    //   verbose:   `def name (in = T  out = T  err = T)` or with inline data/adt/enum
+    //   shorthand: `def name(InType): OutType` or `def name(InType): OutType !! ErrType`
     method_def: ($) =>
-      seq("def", field("name", $.identifier), "(", repeat($._method_part), ")"),
+      choice(
+        // verbose
+        seq("def", field("name", $.identifier), "(", repeat($._method_part), ")"),
+        // shorthand
+        seq(
+          "def",
+          field("name", $.identifier),
+          "(", field("in", $.type_ref), ")",
+          ":", field("out", $.type_ref),
+          optional(seq("!!", field("err", $.type_ref)))
+        )
+      ),
 
     _method_part: ($) =>
       choice($.method_type_ref, $.method_inline_def),
