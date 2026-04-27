@@ -447,3 +447,68 @@ root data MyType : derived[json], derived[ueba], was[OldType] {
       name: (identifier)
       type: (type_ref
         (builtin_type)))))
+
+================================================================================
+any type - bare and qualified forms
+================================================================================
+
+model my.test
+version "1.0.0"
+
+root data Holder {
+  fAny: any
+  fDomainThis: any[domain:this]
+  fDomainCurrent: any[domain:current]
+  fUnderlying: any[Inner]
+  fThisUnderlying: any[domain:this, Inner]
+  fCurrentUnderlying: any[domain:current, Inner]
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (any_type_ref)))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (any_type_ref
+          (any_qualifier))))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (any_type_ref
+          (any_qualifier))))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (any_type_ref
+          (type_ref
+            (scoped_identifier
+              (identifier))))))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (any_type_ref
+          (any_qualifier)
+          (type_ref
+            (scoped_identifier
+              (identifier))))))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (any_type_ref
+          (any_qualifier)
+          (type_ref
+            (scoped_identifier
+              (identifier))))))))

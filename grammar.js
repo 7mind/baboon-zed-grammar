@@ -230,10 +230,30 @@ module.exports = grammar({
     // Types
     type_ref: ($) =>
       choice(
+        $.any_type_ref,
         $.generic_type,
         $.scoped_identifier,
         $.builtin_type
       ),
+
+    // `any` is a builtin with three legal shapes:
+    //   - bare:                                 `any`
+    //   - qualifier-only / underlying-only:     `any[domain:this]`, `any[Inner]`
+    //   - qualifier + underlying:               `any[domain:this, Inner]`
+    // Qualifiers are the literal tokens `domain:this` / `domain:current`.
+    any_type_ref: ($) =>
+      choice(
+        "any",
+        seq(
+          "any",
+          "[",
+          commaSep1(choice($.any_qualifier, $.type_ref)),
+          "]"
+        )
+      ),
+
+    any_qualifier: ($) =>
+      seq("domain", ":", choice("this", "current")),
 
     generic_type: ($) =>
       seq(

@@ -42,6 +42,30 @@
     }
   },
   {
+    "type": "any_qualifier",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "any_type_ref",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "any_qualifier",
+          "named": true
+        },
+        {
+          "type": "type_ref",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "builtin_type",
     "named": true,
     "fields": {}
@@ -898,6 +922,10 @@
       "required": true,
       "types": [
         {
+          "type": "any_type_ref",
+          "named": true
+        },
+        {
           "type": "builtin_type",
           "named": true
         },
@@ -1018,6 +1046,10 @@
     "named": false
   },
   {
+    "type": "any",
+    "named": false
+  },
+  {
     "type": "bit",
     "named": false
   },
@@ -1044,6 +1076,10 @@
     "named": false
   },
   {
+    "type": "current",
+    "named": false
+  },
+  {
     "type": "data",
     "named": false
   },
@@ -1057,6 +1093,10 @@
   },
   {
     "type": "derived",
+    "named": false
+  },
+  {
+    "type": "domain",
     "named": false
   },
   {
@@ -1173,6 +1213,10 @@
   },
   {
     "type": "struct",
+    "named": false
+  },
+  {
+    "type": "this",
     "named": false
   },
   {
