@@ -479,6 +479,56 @@
     }
   },
   {
+    "type": "id_def",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "contract_ref",
+          "named": true
+        },
+        {
+          "type": "contract_refs",
+          "named": true
+        },
+        {
+          "type": "derivations",
+          "named": true
+        },
+        {
+          "type": "field_def",
+          "named": true
+        },
+        {
+          "type": "intersection_def",
+          "named": true
+        },
+        {
+          "type": "parent_def",
+          "named": true
+        },
+        {
+          "type": "unparent_def",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "import_decl",
     "named": true,
     "fields": {},
@@ -745,6 +795,10 @@
           "named": true
         },
         {
+          "type": "id_def",
+          "named": true
+        },
+        {
           "type": "include_decl",
           "named": true
         },
@@ -865,6 +919,10 @@
         },
         {
           "type": "foreign_def",
+          "named": true
+        },
+        {
+          "type": "id_def",
           "named": true
         },
         {
@@ -1179,6 +1237,10 @@
   },
   {
     "type": "i64",
+    "named": false
+  },
+  {
+    "type": "id",
     "named": false
   },
   {

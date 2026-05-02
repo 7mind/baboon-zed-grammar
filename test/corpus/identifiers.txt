@@ -1,0 +1,172 @@
+================================================================================
+Simple id definition
+================================================================================
+
+model test
+version "1.0.0"
+
+id Foo {
+  x: i32
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (id_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
+
+================================================================================
+Root id definition
+================================================================================
+
+model test
+version "1.0.0"
+
+root id PointId {
+  x: i32
+  label: str
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (id_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
+
+================================================================================
+Id with derivations
+================================================================================
+
+model test
+version "1.0.0"
+
+id CompositeId : derived[json], derived[ueba] {
+  tenant: uid
+  user: uid
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (id_def
+    name: (identifier)
+    (derivations
+      (derived
+        (identifier))
+      (derived
+        (identifier)))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
+
+================================================================================
+Id with is contract member
+================================================================================
+
+model test
+version "1.0.0"
+
+contract HasMeta {
+  meta: str
+}
+
+id ItemId : derived[json] {
+  is HasMeta
+  v: uid
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (contract_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type))))
+  (id_def
+    name: (identifier)
+    (derivations
+      (derived
+        (identifier)))
+    (contract_ref
+      (type_ref
+        (scoped_identifier
+          (identifier))))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
+
+================================================================================
+Multi-field id with field named id
+================================================================================
+
+model test
+version "1.0.0"
+
+root id Mixed {
+  active: bit
+  id: uid
+  payload: bytes
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (id_def
+    name: (identifier)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))

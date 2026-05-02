@@ -41,6 +41,7 @@ module.exports = grammar({
     _definition: ($) =>
       choice(
         $.data_def,
+        $.id_def,
         $.adt_def,
         $.enum_def,
         $.contract_def,
@@ -55,6 +56,19 @@ module.exports = grammar({
       seq(
         optional("root"),
         choice("data", "struct"),
+        field("name", $.identifier),
+        optional($.derivations),
+        optional($.contract_refs),
+        "{",
+        repeat($._dto_member),
+        "}"
+      ),
+
+    // Identifier-type definition (M18) — same shape as data_def but with `id` keyword.
+    id_def: ($) =>
+      seq(
+        optional("root"),
+        "id",
         field("name", $.identifier),
         optional($.derivations),
         optional($.contract_refs),
