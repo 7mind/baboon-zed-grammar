@@ -1,0 +1,263 @@
+================================================================================
+ADT simple include
+================================================================================
+
+model test
+version "1.0.0"
+
+adt A { data X { v: i32 } }
+adt B { + A }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (adt_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type)))))
+  (adt_def
+    name: (identifier)
+    (parent_def
+      (type_ref
+        (scoped_identifier
+          (identifier))))))
+
+================================================================================
+ADT intersect
+================================================================================
+
+model test
+version "1.0.0"
+
+adt A { data X { v: i32 } }
+adt B { data X { v: i32 } }
+adt C { ^ A ^ B }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (adt_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type)))))
+  (adt_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type)))))
+  (adt_def
+    name: (identifier)
+    (intersection_def
+      (type_ref
+        (scoped_identifier
+          (identifier))))
+    (intersection_def
+      (type_ref
+        (scoped_identifier
+          (identifier))))))
+
+================================================================================
+ADT exclude dotted branch
+================================================================================
+
+model test
+version "1.0.0"
+
+adt E { data Foo { x: i32 } data Bar { y: i32 } }
+adt F { + E - E.Bar }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (adt_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type))))
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type)))))
+  (adt_def
+    name: (identifier)
+    (parent_def
+      (type_ref
+        (scoped_identifier
+          (identifier))))
+    (unparent_def
+      (type_ref
+        (scoped_identifier
+          (identifier)
+          (identifier))))))
+
+================================================================================
+ADT namespace-qualified include
+================================================================================
+
+model test
+version "1.0.0"
+
+ns sub { adt M { data Foo { x: i32 } } }
+adt E { + sub.M }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (namespace_def
+    name: (identifier)
+    (adt_def
+      name: (identifier)
+      (data_def
+        name: (identifier)
+        (field_def
+          name: (identifier)
+          type: (type_ref
+            (builtin_type))))))
+  (adt_def
+    name: (identifier)
+    (parent_def
+      (type_ref
+        (scoped_identifier
+          (identifier)
+          (identifier))))))
+
+================================================================================
+ADT multi include
+================================================================================
+
+model test
+version "1.0.0"
+
+adt A { data X { v: i32 } }
+adt B { data Y { v: i32 } }
+adt C { + A + B }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (adt_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type)))))
+  (adt_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type)))))
+  (adt_def
+    name: (identifier)
+    (parent_def
+      (type_ref
+        (scoped_identifier
+          (identifier))))
+    (parent_def
+      (type_ref
+        (scoped_identifier
+          (identifier))))))
+
+================================================================================
+ADT multi intersect
+================================================================================
+
+model test
+version "1.0.0"
+
+adt A { data X { v: i32 } }
+adt B { data X { v: i32 } }
+adt D { data X { v: i32 } }
+adt C { ^ A ^ B ^ D }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (adt_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type)))))
+  (adt_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type)))))
+  (adt_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (builtin_type)))))
+  (adt_def
+    name: (identifier)
+    (intersection_def
+      (type_ref
+        (scoped_identifier
+          (identifier))))
+    (intersection_def
+      (type_ref
+        (scoped_identifier
+          (identifier))))
+    (intersection_def
+      (type_ref
+        (scoped_identifier
+          (identifier))))))

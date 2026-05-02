@@ -91,7 +91,8 @@ module.exports = grammar({
       ),
 
     _adt_member: ($) =>
-      choice($.data_def, $.contract_def, $.contract_ref),
+      choice($.data_def, $.contract_def, $.contract_ref,
+             $.parent_def, $.unparent_def, $.intersection_def),
 
     // Enum definition
     enum_def: ($) =>

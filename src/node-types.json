@@ -37,6 +37,18 @@
         {
           "type": "derivations",
           "named": true
+        },
+        {
+          "type": "intersection_def",
+          "named": true
+        },
+        {
+          "type": "parent_def",
+          "named": true
+        },
+        {
+          "type": "unparent_def",
+          "named": true
         }
       ]
     }

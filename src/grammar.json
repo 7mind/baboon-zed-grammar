@@ -436,6 +436,18 @@
         {
           "type": "SYMBOL",
           "name": "contract_ref"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parent_def"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "unparent_def"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "intersection_def"
         }
       ]
     },
