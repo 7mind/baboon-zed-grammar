@@ -47,6 +47,10 @@
           "named": true
         },
         {
+          "type": "type_params",
+          "named": true
+        },
+        {
           "type": "unparent_def",
           "named": true
         }
@@ -115,6 +119,10 @@
         },
         {
           "type": "parent_def",
+          "named": true
+        },
+        {
+          "type": "type_params",
           "named": true
         },
         {
@@ -195,6 +203,10 @@
         },
         {
           "type": "parent_def",
+          "named": true
+        },
+        {
+          "type": "type_params",
           "named": true
         },
         {
@@ -900,6 +912,10 @@
         {
           "type": "method_def",
           "named": true
+        },
+        {
+          "type": "type_params",
+          "named": true
         }
       ]
     }
@@ -1011,6 +1027,31 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "derivations",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_params",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
     }
   },
   {

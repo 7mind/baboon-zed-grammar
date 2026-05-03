@@ -57,6 +57,7 @@ module.exports = grammar({
         optional("root"),
         choice("data", "struct"),
         field("name", $.identifier),
+        optional($.type_params),
         optional($.derivations),
         optional($.contract_refs),
         "{",
@@ -83,6 +84,7 @@ module.exports = grammar({
         optional("root"),
         "adt",
         field("name", $.identifier),
+        optional($.type_params),
         optional($.derivations),
         optional($.contract_refs),
         "{",
@@ -121,6 +123,7 @@ module.exports = grammar({
       seq(
         "contract",
         field("name", $.identifier),
+        optional($.type_params),
         "{",
         repeat($._dto_member),
         "}"
@@ -159,6 +162,7 @@ module.exports = grammar({
         optional("root"),
         "service",
         field("name", $.identifier),
+        optional($.type_params),
         "{",
         repeat($.method_def),
         "}"
@@ -213,7 +217,8 @@ module.exports = grammar({
         "type",
         field("name", $.identifier),
         "=",
-        field("target", $.type_ref)
+        field("target", $.type_ref),
+        optional($.derivations)
       ),
 
     // DTO members
@@ -246,6 +251,9 @@ module.exports = grammar({
     contract_ref: ($) => seq("is", $.type_ref),
 
     contract_refs: ($) => repeat1($.contract_ref),
+
+    // Template type parameters: [T] or [T, U, …]
+    type_params: ($) => seq("[", commaSep1($.identifier), "]"),
 
     // Derivations
     derivations: ($) => seq(":", commaSep1($._derivation)),

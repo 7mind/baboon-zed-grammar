@@ -1,0 +1,260 @@
+================================================================================
+Template data - single type param
+================================================================================
+
+model test
+version "1.0.0"
+
+data Page[T] {
+  items: lst[T]
+  total: u32
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (type_params
+      (identifier))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (generic_type
+          name: (builtin_type)
+          (type_ref
+            (scoped_identifier
+              (identifier))))))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
+
+================================================================================
+Template ADT - multi type params
+================================================================================
+
+model test
+version "1.0.0"
+
+adt Envelope[T, E] {
+  data Ok { value: T }
+  data Err { error: E }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (adt_def
+    name: (identifier)
+    (type_params
+      (identifier)
+      (identifier))
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (scoped_identifier
+            (identifier)))))
+    (data_def
+      name: (identifier)
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (scoped_identifier
+            (identifier)))))))
+
+================================================================================
+Template contract - single type param
+================================================================================
+
+model test
+version "1.0.0"
+
+contract Acked[T] {
+  value: T
+  ack: bit
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (contract_def
+    name: (identifier)
+    (type_params
+      (identifier))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (scoped_identifier
+          (identifier))))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
+
+================================================================================
+Template service - multi type params
+================================================================================
+
+model test
+version "1.0.0"
+
+service Crud[K, V] {
+  def get (K): V
+  def put (V): K
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (service_def
+    name: (identifier)
+    (type_params
+      (identifier)
+      (identifier))
+    (method_def
+      name: (identifier)
+      in: (type_ref
+        (scoped_identifier
+          (identifier)))
+      out: (type_ref
+        (scoped_identifier
+          (identifier))))
+    (method_def
+      name: (identifier)
+      in: (type_ref
+        (scoped_identifier
+          (identifier)))
+      out: (type_ref
+        (scoped_identifier
+          (identifier))))))
+
+================================================================================
+Type alias instantiation
+================================================================================
+
+model test
+version "1.0.0"
+
+type IntPage = Page[i32]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (type_alias_def
+    name: (identifier)
+    target: (type_ref
+      (generic_type
+        name: (scoped_identifier
+          (identifier))
+        (type_ref
+          (builtin_type))))))
+
+================================================================================
+Type alias with derivations
+================================================================================
+
+model test
+version "1.0.0"
+
+type IntPage = Page[i32] : derived[json], derived[ueba]
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (type_alias_def
+    name: (identifier)
+    target: (type_ref
+      (generic_type
+        name: (scoped_identifier
+          (identifier))
+        (type_ref
+          (builtin_type))))
+    (derivations
+      (derived
+        (identifier))
+      (derived
+        (identifier)))))
+
+================================================================================
+Empty type param brackets are rejected
+================================================================================
+
+model test
+version "1.0.0"
+
+data X[] { f: i32 }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (ERROR)
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
+
+================================================================================
+id_def rejects type params
+================================================================================
+
+model test
+version "1.0.0"
+
+id Foo[T] { f: i32 }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (id_def
+    name: (identifier)
+    (ERROR
+      (identifier))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (builtin_type)))))
