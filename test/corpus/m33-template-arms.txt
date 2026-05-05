@@ -1,0 +1,220 @@
+================================================================================
+M33: parent_def with template instantiation
+================================================================================
+
+model test
+version "1.0.0"
+
+data Page[T] { v: T }
+
+data IntPage { + Page[i32] }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (type_params
+      (identifier))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (scoped_identifier
+          (identifier)))))
+  (data_def
+    name: (identifier)
+    (parent_def
+      (type_ref
+        (generic_type
+          name: (scoped_identifier
+            (identifier))
+          (type_ref
+            (builtin_type)))))))
+
+================================================================================
+M33: unparent_def with template instantiation
+================================================================================
+
+model test
+version "1.0.0"
+
+data Stats[T] { sum: T }
+
+data WithoutStats { - Stats[i32] }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (type_params
+      (identifier))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (scoped_identifier
+          (identifier)))))
+  (data_def
+    name: (identifier)
+    (unparent_def
+      (type_ref
+        (generic_type
+          name: (scoped_identifier
+            (identifier))
+          (type_ref
+            (builtin_type)))))))
+
+================================================================================
+M33: intersection_def with template instantiation
+================================================================================
+
+model test
+version "1.0.0"
+
+data Page[T] { v: T }
+
+data PageOnly { ^ Page[i32] }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (type_params
+      (identifier))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (scoped_identifier
+          (identifier)))))
+  (data_def
+    name: (identifier)
+    (intersection_def
+      (type_ref
+        (generic_type
+          name: (scoped_identifier
+            (identifier))
+          (type_ref
+            (builtin_type)))))))
+
+================================================================================
+M33: mixed +/-/^ template arms in one DTO
+================================================================================
+
+model test
+version "1.0.0"
+
+data Page[T] { v: T }
+data Stats[T] { s: T }
+
+data Mixed {
+  + Page[i32]
+  - Stats[i32]
+  ^ Page[i32]
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (data_def
+    name: (identifier)
+    (type_params
+      (identifier))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (scoped_identifier
+          (identifier)))))
+  (data_def
+    name: (identifier)
+    (type_params
+      (identifier))
+    (field_def
+      name: (identifier)
+      type: (type_ref
+        (scoped_identifier
+          (identifier)))))
+  (data_def
+    name: (identifier)
+    (parent_def
+      (type_ref
+        (generic_type
+          name: (scoped_identifier
+            (identifier))
+          (type_ref
+            (builtin_type)))))
+    (unparent_def
+      (type_ref
+        (generic_type
+          name: (scoped_identifier
+            (identifier))
+          (type_ref
+            (builtin_type)))))
+    (intersection_def
+      (type_ref
+        (generic_type
+          name: (scoped_identifier
+            (identifier))
+          (type_ref
+            (builtin_type)))))))
+
+================================================================================
+M33: cross-namespace template in parent_def
+================================================================================
+
+model test
+version "1.0.0"
+
+ns inner { data NsPage[T] { v: T } }
+
+data CrossNs { + inner.NsPage[i32] }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (model_decl
+    (scoped_identifier
+      (identifier)))
+  (version_decl
+    (string_literal))
+  (namespace_def
+    name: (identifier)
+    (data_def
+      name: (identifier)
+      (type_params
+        (identifier))
+      (field_def
+        name: (identifier)
+        type: (type_ref
+          (scoped_identifier
+            (identifier))))))
+  (data_def
+    name: (identifier)
+    (parent_def
+      (type_ref
+        (generic_type
+          name: (scoped_identifier
+            (identifier)
+            (identifier))
+          (type_ref
+            (builtin_type)))))))
